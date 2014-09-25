@@ -1,0 +1,46 @@
+2014/09/25 14:59:03 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'ts_todo.tbl_migration' doesn't exist. The SQL statement executed was: SHOW FULL COLUMNS FROM `tbl_migration`.
+2014/09/25 17:58:22 [error] [php] Array to string conversion (/home/metis/www/todo/protected/framework/db/CDbCommand.php:337)
+Stack trace:
+#0 /home/metis/www/todo/protected/framework/db/CDbMigration.php(178): CDbCommand->insert()
+#1 /home/metis/www/todo/protected/migrations/m140925_121825_lookup.php(28): m140925_121825_lookup->insert()
+#2 /home/metis/www/todo/protected/framework/cli/commands/MigrateCommand.php(415): m140925_121825_lookup->up()
+#3 /home/metis/www/todo/protected/framework/cli/commands/MigrateCommand.php(109): MigrateCommand->migrateUp()
+#4 unknown(0): MigrateCommand->actionUp()
+#5 /home/metis/www/todo/protected/framework/console/CConsoleCommand.php(172): ReflectionMethod->invokeArgs()
+#6 /home/metis/www/todo/protected/framework/console/CConsoleCommandRunner.php(71): MigrateCommand->run()
+#7 /home/metis/www/todo/protected/framework/console/CConsoleApplication.php(92): CConsoleCommandRunner->run()
+#8 /home/metis/www/todo/protected/framework/base/CApplication.php(184): CConsoleApplication->processRequest()
+#9 /home/metis/www/todo/protected/framework/yiic.php(33): CConsoleApplication->run()
+#10 /home/metis/www/todo/protected/yiic.php(7): require_once()
+#11 /home/metis/www/todo/protected/yiic(4): require_once()
+
+2014/09/25 17:59:38 [error] [system.db.CDbCommand] CDbCommand::execute() failed: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'lookup' already exists. The SQL statement executed was: CREATE TABLE `lookup` (
+	`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`name` varchar(128) NOT NULL,
+	`code` varchar(30) NOT NULL,
+	`type` varchar(128) NOT NULL,
+	`position` int(11) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci.
+2014/09/25 17:59:38 [error] [exception.CDbException] exception 'CDbException' with message 'CDbCommand failed to execute the SQL statement: SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'lookup' already exists. The SQL statement executed was: CREATE TABLE `lookup` (
+	`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`name` varchar(128) NOT NULL,
+	`code` varchar(30) NOT NULL,
+	`type` varchar(128) NOT NULL,
+	`position` int(11) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci' in /home/metis/www/todo/protected/framework/db/CDbCommand.php:358
+Stack trace:
+#0 /home/metis/www/todo/protected/framework/db/CDbCommand.php(1352): CDbCommand->execute()
+#1 /home/metis/www/todo/protected/framework/db/CDbMigration.php(250): CDbCommand->createTable('lookup', Array, 'ENGINE=InnoDB  ...')
+#2 /home/metis/www/todo/protected/migrations/m140925_121825_lookup.php(13): CDbMigration->createTable('lookup', Array, 'ENGINE=InnoDB  ...')
+#3 /home/metis/www/todo/protected/framework/cli/commands/MigrateCommand.php(415): m140925_121825_lookup->up()
+#4 /home/metis/www/todo/protected/framework/cli/commands/MigrateCommand.php(109): MigrateCommand->migrateUp('m140925_121825_...')
+#5 [internal function]: MigrateCommand->actionUp(Array)
+#6 /home/metis/www/todo/protected/framework/console/CConsoleCommand.php(172): ReflectionMethod->invokeArgs(Object(MigrateCommand), Array)
+#7 /home/metis/www/todo/protected/framework/console/CConsoleCommandRunner.php(71): CConsoleCommand->run(Array)
+#8 /home/metis/www/todo/protected/framework/console/CConsoleApplication.php(92): CConsoleCommandRunner->run(Array)
+#9 /home/metis/www/todo/protected/framework/base/CApplication.php(184): CConsoleApplication->processRequest()
+#10 /home/metis/www/todo/protected/framework/yiic.php(33): CApplication->run()
+#11 /home/metis/www/todo/protected/yiic.php(7): require_once('/home/metis/www...')
+#12 /home/metis/www/todo/protected/yiic(4): require_once('/home/metis/www...')
+#13 {main}
+---
