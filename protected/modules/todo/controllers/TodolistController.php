@@ -114,7 +114,8 @@ class TodolistController extends Controller
 		$model = $this->loadModel($id);
 		$model->is_complted=1;
 		$model->save(false,array('is_complted'));
-		$this->redirect(Yii::app()->request->urlReferrer);
+                echo $model->id; exit();
+		//$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : Yii::app()->request->urlReferrer);
 	}
         
         /**
@@ -127,7 +128,8 @@ class TodolistController extends Controller
 		$model = $this->loadModel($id);
 		$model->is_complted=0;
 		$model->save(false,array('is_complted'));
-		$this->redirect(Yii::app()->request->urlReferrer);
+                echo $model->id; exit();
+                //$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : Yii::app()->request->urlReferrer);
 	}
 
 	/**
