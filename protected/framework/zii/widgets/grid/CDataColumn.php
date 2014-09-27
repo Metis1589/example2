@@ -4,14 +4,14 @@
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @link http://www.yiiframework.com/
- * @copyright 2008-2013 Yii Software LLC
+ * @copyright Copyright &copy; 2008-2011 Yii Software LLC
  * @license http://www.yiiframework.com/license/
  */
 
 Yii::import('zii.widgets.grid.CGridColumn');
 
 /**
- * CDataColumn represents a grid view column that is associated with a data attribute or PHP expression.
+ * CDataColumn represents a grid view column that is associated with a data attribute or expression.
  *
  * Either {@link name} or {@link value} should be specified. The former specifies
  * a data attribute name, while the latter a PHP expression whose value should be rendered instead.
@@ -21,29 +21,25 @@ Yii::import('zii.widgets.grid.CGridColumn');
  * value will be used by {@link CSort} to render a clickable link in the header cell to trigger the sorting.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
+ * @version $Id: CDataColumn.php 3057 2011-03-13 01:30:36Z qiang.xue $
  * @package zii.widgets.grid
  * @since 1.1
  */
 class CDataColumn extends CGridColumn
 {
 	/**
-	 * @var string the attribute name of the data model. Used for column sorting, filtering and to render the corresponding
-	 * attribute value in each data cell. If {@link value} is specified it will be used to rendered the data cell instead of the attribute value.
+	 * @var string the attribute name of the data model. The corresponding attribute value will be rendered
+	 * in each data cell. If {@link value} is specified, this property will be ignored
+	 * unless the column needs to be sortable or filtered.
 	 * @see value
 	 * @see sortable
 	 */
 	public $name;
 	/**
-	 * @var string a PHP expression that will be evaluated for every data cell using {@link evaluateExpression} and whose result will be rendered
-	 * as the content of the data cell.
-	 * In this expression, you can use the following variables:
-	 * <ul>
-	 *   <li><code>$row</code> the row number (zero-based).</li>
-	 *   <li><code>$data</code> the data model for the row.</li>
-	 * 	 <li><code>$this</code> the column object.</li>
-	 * </ul>
-	 * A PHP expression can be any PHP code that has a value. To learn more about what an expression is,
-	 * please refer to the {@link http://www.php.net/manual/en/language.expressions.php php manual}.
+	 * @var string a PHP expression that will be evaluated for every data cell and whose result will be rendered
+	 * as the content of the data cells. In this expression, the variable
+	 * <code>$row</code> the row number (zero-based); <code>$data</code> the data model for the row;
+	 * and <code>$this</code> the column object.
 	 */
 	public $value;
 	/**
@@ -61,13 +57,12 @@ class CDataColumn extends CGridColumn
 	 */
 	public $sortable=true;
 	/**
-	 * @var mixed the HTML code representing a filter input (eg a text field, a dropdown list)
+	 * @var mixed the HTML code representing a filter input (e.g. a text field, a dropdown list)
 	 * that is used for this data column. This property is effective only when
-	 * {@link CGridView::filter} is set.
+	 * {@link CGridView::enableFiltering} is set true.
 	 * If this property is not set, a text field will be generated as the filter input;
 	 * If this property is an array, a dropdown list will be generated that uses this property value as
 	 * the list options.
-	 * If you don't want a filter for this data column, set this value to false.
 	 * @since 1.1.1
 	 */
 	public $filter;
@@ -85,62 +80,57 @@ class CDataColumn extends CGridColumn
 	}
 
 	/**
-	 * Returns the filter cell content.
-	 * This method will return the {@link filter} as is if it is a string.
+	 * Renders the filter cell content.
+	 * This method will render the {@link filter} as is if it is a string.
 	 * If {@link filter} is an array, it is assumed to be a list of options, and a dropdown selector will be rendered.
 	 * Otherwise if {@link filter} is not false, a text field is rendered.
-	 * @return string the filter cell content
-	 * @since 1.1.15
+	 * @since 1.1.1
 	 */
-	public function getFilterCellContent()
+	protected function renderFilterCellContent()
 	{
 		if(is_string($this->filter))
-			return $this->filter;
-		elseif($this->filter!==false && $this->grid->filter!==null && $this->name!==null && strpos($this->name,'.')===false)
+			echo $this->filter;
+		else if($this->filter!==false && $this->grid->filter!==null && $this->name!==null && strpos($this->name,'.')===false)
 		{
 			if(is_array($this->filter))
-				return CHtml::activeDropDownList($this->grid->filter, $this->name, $this->filter, array('id'=>false,'prompt'=>''));
-			elseif($this->filter===null)
-				return CHtml::activeTextField($this->grid->filter, $this->name, array('id'=>false));
+				echo CHtml::activeDropDownList($this->grid->filter, $this->name, $this->filter, array('id'=>false,'prompt'=>''));
+			else if($this->filter===null)
+				echo CHtml::activeTextField($this->grid->filter, $this->name, array('id'=>false));
 		}
 		else
-			return parent::getFilterCellContent();
+			parent::renderFilterCellContent();
 	}
 
 	/**
-	 * Returns the header cell content.
+	 * Renders the header cell content.
 	 * This method will render a link that can trigger the sorting if the column is sortable.
-	 * @return string the header cell content.
-	 * @since 1.1.15
 	 */
-	public function getHeaderCellContent()
+	protected function renderHeaderCellContent()
 	{
 		if($this->grid->enableSorting && $this->sortable && $this->name!==null)
-			return $this->grid->dataProvider->getSort()->link($this->name,$this->header,array('class'=>'sort-link'));
-		elseif($this->name!==null && $this->header===null)
+			echo $this->grid->dataProvider->getSort()->link($this->name,$this->header);
+		else if($this->name!==null && $this->header===null)
 		{
 			if($this->grid->dataProvider instanceof CActiveDataProvider)
-				return CHtml::encode($this->grid->dataProvider->model->getAttributeLabel($this->name));
+				echo CHtml::encode($this->grid->dataProvider->model->getAttributeLabel($this->name));
 			else
-				return CHtml::encode($this->name);
+				echo CHtml::encode($this->name);
 		}
 		else
-			return parent::getHeaderCellContent();
+			parent::renderHeaderCellContent();
 	}
 
 	/**
-	 * Returns the data cell content.
+	 * Renders the data cell content.
 	 * This method evaluates {@link value} or {@link name} and renders the result.
 	 * @param integer $row the row number (zero-based)
-	 * @return string the data cell content.
-	 * @since 1.1.15
+	 * @param mixed $data the data associated with the row
 	 */
-	public function getDataCellContent($row)
+	protected function renderDataCellContent($row,$data)
 	{
-		$data=$this->grid->dataProvider->data[$row];
 		if($this->value!==null)
 			$value=$this->evaluateExpression($this->value,array('data'=>$data,'row'=>$row));
-		elseif($this->name!==null)
+		else if($this->name!==null)
 			$value=CHtml::value($data,$this->name);
 		echo $value===null ? $this->grid->nullDisplay : $this->grid->getFormatter()->format($value,$this->type);
 	}

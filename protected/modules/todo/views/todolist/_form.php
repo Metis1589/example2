@@ -21,19 +21,19 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50, 'style'=>'width: 100%')); ?>
 		<?php echo $form->error($model,'description'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'category'); ?>
-		<?php echo $form->dropDownList($model,'category',Lookup::items('task_category')); ?>
+		<?php echo $form->dropDownList($model,'category',Lookup::items('task_category'),array('style'=>'width: 100%')); ?>
 		<?php echo $form->error($model,'category'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'priority'); ?>
-		<?php echo $form->numberField($model,'priority'); ?>
+		<?php echo $form->numberField($model,'priority',array('style'=>'width: 100%')); ?>
 		<?php echo $form->error($model,'priority'); ?>
 	</div>
         

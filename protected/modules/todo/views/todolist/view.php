@@ -4,7 +4,7 @@
 
 $this->breadcrumbs=array(
 	Yii::t('main','Tasks')=>array('admin'),
-	$model->id,
+	Yii::t('main','Task').' #'.$model->id
 );
 
 $this->menu=array(
@@ -22,16 +22,17 @@ $this->menu=array(
 	'attributes'=>array(
 		'id',
 		'description',
-                /*
                 array(
                     'name'  => 'category',
-                    'value' => 'Lookup::item("task_category",$data->category)'
+                    'value' => Lookup::item("task_category",$model->category)
                 ),
-                 */
-                'category',
-		'is_complted',
+                array(
+                    'name'  => 'is_complted',
+                    'value' => $model->is_complted ? Yii::t('main','Complited') : Yii::t('main','In progress')
+                ),
 		'priority',
 		'date_create',
 		'date_update',
 	),
 )); ?>
+<br>

@@ -4,7 +4,7 @@
 
 $this->breadcrumbs=array(
 	Yii::t('main','Tasks')=>array('admin'),
-	$model->id=>array('view','id'=>$model->id),
+	Yii::t('main','Task').' #'.$model->id=>array('view','id'=>$model->id),
 	Yii::t('main','Update task #{id}',array('{id}'=>$model->id)),
 );
 ?>

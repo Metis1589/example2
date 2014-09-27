@@ -26,6 +26,7 @@ return array(
     
     'Is Complited' => 'Выполнена',
     'Date Create' => 'Дата создания',
+    'Date Update' => 'Дата изменения',
     
     'Mark as complited' => 'Пометить как выполненую',
     'Restore task' => 'Возобновить задание',
@@ -39,4 +40,9 @@ return array(
     
     'Complited' => 'Завершена',
     'In progress' => 'Выполняется',
+    
+    'Todo list application' => 'Планировщик задач',
+    'Home' => 'Главная',
+    
+    'Filter tasks' => 'Фильтр задач'
 );
