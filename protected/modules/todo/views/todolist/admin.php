@@ -26,7 +26,6 @@ $('.search-form form').submit(function(){
 
 <h1><?php echo Yii::t('main','Manage tasks') ?></h1>
 <br>
-
 <?php echo CHtml::image(Yii::app()->getBaseUrl().'/img/icon/tasks_16.png').' '.CHtml::link(Yii::t('main','All tasks'),Yii::app()->createUrl('/todo/todolist/admin')) ?><br>
 <?php echo CHtml::image(Yii::app()->getBaseUrl().'/img/icon/tick_16.png').' '.CHtml::link(Yii::t('main','Complited tasks'),Yii::app()->createUrl('/todo/todolist/admin',array('show'=>'complited'))) ?><br>
 <?php echo CHtml::image(Yii::app()->getBaseUrl().'/img/icon/inprogress_16.png').' '.CHtml::link(Yii::t('main','In progress tasks'),Yii::app()->createUrl('/todo/todolist/admin',array('show'=>'inprogress'))) ?>
@@ -55,18 +54,6 @@ $('.search-form form').submit(function(){
                     'filter'=>Lookup::items("task_category"),
                     'sortable' => false
 		),
-                /*array
-                (
-                    'name'=>'is_complted',
-                    'value'=>'$data->is_complted ? Yii::t("main","Complited") : Yii::t("main","In progress")',
-                    'filter'=>array(0=>'In progress tasks',1=>'Complited tasks',),
-		),
-		'priority',
-		array
-                (
-                    'name'=>'date_create',
-                    'value'=>'Yii::app()->dateFormatter->format("dd.MM.yyyy HH:mm",$data->date_create)',
-		),*/
 		array(
 			'class'=>'CButtonColumn',
 			'template'=>'{complite}{restore}{view}{update}{delete}',
