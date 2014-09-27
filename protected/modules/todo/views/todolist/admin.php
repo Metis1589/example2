@@ -81,7 +81,7 @@ $('.search-form form').submit(function(){
 <?php
 Yii::app()->clientScript->registerScript('status_update',
 '
-$("td").on("click","a.complite",function(){
+$("#content").on("click","a.complite",function(){
     var id = $(this).closest("tr").find("td:first").html();
     $.ajax({
         type: "POST",
@@ -101,7 +101,7 @@ $("td").on("click","a.complite",function(){
     });
     return false;
 });
-$("td").on("click","a.restore",function(){
+$("#content").on("click","a.restore",function(){
     var id = $(this).closest("tr").find("td:first").html();
     $.ajax({
         type: "POST",
