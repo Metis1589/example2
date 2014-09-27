@@ -88,17 +88,16 @@ $("td").on("click","a.complite",function(){
         dataType : "json",
         url: "'.Yii::app()->getBaseUrl(true).'/todo/todolist/restore/id/"+id,
         success: function( data ) {
-            var target = $("td").filter(function() {
-                return $(this).text() == data;
-            }).closest("tr");
-            target.find("td:last .complite img").attr("src","'.Yii::app()->getBaseUrl(true).'/img/icon/inprogress_16.png");
-            target.find("td:last a.complite").addClass("restore");
-            target.find("td:last a.restore").removeClass("complite");
-            target.find("td:last a.restore").attr("title","'.Yii::t('main','Mark as complited').'");
+            if(data.result){
+                var target = $("td").filter(function() {
+                    return $(this).text() == data.id;
+                }).closest("tr");
+                target.find("td:last .complite img").attr("src","'.Yii::app()->getBaseUrl(true).'/img/icon/inprogress_16.png");
+                target.find("td:last a.complite").addClass("restore");
+                target.find("td:last a.restore").removeClass("complite");
+                target.find("td:last a.restore").attr("title","'.Yii::t('main','Mark as complited').'");
+            }
         },
-        error: function( data ){
-
-        }
     });
     return false;
 });
@@ -109,17 +108,16 @@ $("td").on("click","a.restore",function(){
         dataType : "json",
         url: "'.Yii::app()->getBaseUrl(true).'/todo/todolist/complite/id/"+id,
         success: function( data ) {
-            var target = $("td").filter(function() {
-                return $(this).text() == data;
-            }).closest("tr");      
-            target.find("td:last .restore img").attr("src","'.Yii::app()->getBaseUrl(true).'/img/icon/tick_16.png");
-            target.find("td:last a.restore").addClass("complite");            
-            target.find("td:last a.complite").removeClass("restore");
-            target.find("td:last a.complite").attr("title","'.Yii::t('main','Restore task').'");
+            if(data.result){
+                var target = $("td").filter(function() {
+                    return $(this).text() == data.id;
+                }).closest("tr");      
+                target.find("td:last .restore img").attr("src","'.Yii::app()->getBaseUrl(true).'/img/icon/tick_16.png");
+                target.find("td:last a.restore").addClass("complite");            
+                target.find("td:last a.complite").removeClass("restore");
+                target.find("td:last a.complite").attr("title","'.Yii::t('main','Restore task').'");
+            }
         },
-        error: function( data ){
-
-        }
     });
     return false;
 });

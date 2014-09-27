@@ -14,7 +14,8 @@ class TodolistController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-		);
+                        'ajaxOnly +restore,complite'
+                );
 	}
 
 	/**
@@ -113,9 +114,10 @@ class TodolistController extends Controller
 	{
 		$model = $this->loadModel($id);
 		$model->is_complted=1;
-		$model->save(false,array('is_complted'));
-                echo $model->id; exit();
-		//$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : Yii::app()->request->urlReferrer);
+                $result['result'] = $model->save(false,array('is_complted'));
+                $result['id'] = $model->id;
+                echo CJSON::encode($result);
+                exit();
 	}
         
         /**
@@ -127,9 +129,10 @@ class TodolistController extends Controller
 	{
 		$model = $this->loadModel($id);
 		$model->is_complted=0;
-		$model->save(false,array('is_complted'));
-                echo $model->id; exit();
-                //$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : Yii::app()->request->urlReferrer);
+		$result['result'] = $model->save(false,array('is_complted'));
+                $result['id'] = $model->id;
+                echo CJSON::encode($result);
+                exit();
 	}
 
 	/**
